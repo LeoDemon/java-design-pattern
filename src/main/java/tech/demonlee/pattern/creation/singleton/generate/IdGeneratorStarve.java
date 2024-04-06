@@ -10,10 +10,14 @@ import java.util.concurrent.atomic.AtomicLong;
 public class IdGeneratorStarve {
 
     private AtomicLong id = new AtomicLong();
-
+    private static boolean instanceCreated = false;
     private static final IdGeneratorStarve instance = new IdGeneratorStarve();
 
     private IdGeneratorStarve() {
+        if (instanceCreated) {
+            throw new IllegalStateException("cannot create new IDGeneratorStarve instance for singleton");
+        }
+        instanceCreated = true;
     }
 
     public static IdGeneratorStarve getInstance() {
