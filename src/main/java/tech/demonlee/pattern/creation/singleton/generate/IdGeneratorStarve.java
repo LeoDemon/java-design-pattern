@@ -1,5 +1,6 @@
 package tech.demonlee.pattern.creation.singleton.generate;
 
+import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -7,9 +8,9 @@ import java.util.concurrent.atomic.AtomicLong;
  * @date 2020-09-05 09:58
  * @desc 饿汉式：实现简单，对资源耗用不大的情况，建议优先使用
  */
-public class IdGeneratorStarve {
+public class IdGeneratorStarve implements Serializable {
 
-    private AtomicLong id = new AtomicLong();
+    private transient AtomicLong id = new AtomicLong();
     private static boolean instanceCreated = false;
     private static final IdGeneratorStarve instance = new IdGeneratorStarve();
 
@@ -26,5 +27,13 @@ public class IdGeneratorStarve {
 
     public long generateId() {
         return id.getAndIncrement();
+    }
+
+    public AtomicLong getId() {
+        return id;
+    }
+
+    private Object readResolve() {
+        return instance;
     }
 }
