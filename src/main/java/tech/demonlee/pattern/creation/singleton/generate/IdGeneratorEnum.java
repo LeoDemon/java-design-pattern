@@ -1,5 +1,6 @@
 package tech.demonlee.pattern.creation.singleton.generate;
 
+import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -8,7 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @desc 枚举方式
  * 下面的方式是饿汉模式的实现方式
  */
-public enum IdGeneratorEnum {
+public enum IdGeneratorEnum implements Serializable {
 
     /**
      * 实例
@@ -17,7 +18,7 @@ public enum IdGeneratorEnum {
 
     private AtomicLong id = new AtomicLong();
 
-    private IdGeneratorEnum() {
+    IdGeneratorEnum() {
     }
 
     public long generateId() {
@@ -26,5 +27,9 @@ public enum IdGeneratorEnum {
 
     public IdGeneratorEnum getInstance() {
         return INSTANCE;
+    }
+
+    public AtomicLong getId() {
+        return id;
     }
 }
